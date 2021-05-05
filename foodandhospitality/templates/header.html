@@ -16,33 +16,48 @@
       .navcontainer {
         margin: 1px;
       }
+      .navbar{
+
+      }
     </style>
   </head>
   <body>
-    <div class="navcontainer">
-      <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button> -->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-              </li>
-            </ul>
-          </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand col-sm-6" href="#">Company Name</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item col-sm-6">
+              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+            </li>
+            <li class="nav-item col-sm-6">
+              <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item col-sm-6">
+              <a class="nav-link" href="#">Report</a>
+            </li>
+            <li class="nav-item col-sm-6">
+              <a class="nav-link" href="login.html">Login</a>
+            </li>
+            <li class="nav-item col-sm-6">
+              <a class="nav-link" href="Registration.html">Register</a>
+            </li>
+         
+          
         </div>
-      </nav>
-    </div>
-
+      </div>
+    </nav>
     <div id="content">{% block content %}{% endblock %}</div>
   </body>
 </html>
