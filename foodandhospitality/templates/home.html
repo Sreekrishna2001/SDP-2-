@@ -1,3 +1,4 @@
+{% extends "header.html" %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,43 +12,10 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'home.css' %}" />
   </head>
-  <style>
-    /* .carousel-inner {
-      height: 50%;
-      width: 100%;
-    } */
-    .carousel .item {
-      height: 550px;
-    }
-
-    .item img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-height: 600px;
-    }
-    .containerr {
-      display: grid;
-      grid-template-columns: auto auto auto;
-    }
-    .crd {
-      height: 50vh;
-      width: 40vh;
-      margin: 13vh;
-      border: 2px solid black;
-    }
-    /* body {
-      background-color: aquamarine;
-    } */
-    .crd > img {
-      height: 50vh;
-      width: 40vh;
-    }
-  </style>
   <body>
     <div>
-      <div><h1>Header</h1></div>
       <div>
         <!-- <h2>Carousel Example</h2> -->
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -115,3 +83,4 @@
     </div>
   </body>
 </html>
+{% endblock %}
