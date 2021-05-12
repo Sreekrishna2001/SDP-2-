@@ -1,0 +1,8 @@
+{% extends 'header.html' %} {% load static %} {% block content %}
+<h1>This is user profile page</h1>
+<form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="submit" />
+</form>
+<img src="{{request.user.uprofile.profileimg.png}}" alt="" />
+{% endblock %}

@@ -19,13 +19,20 @@
 .crd {
   height: 50vh;
   width: 40vh;
-  margin: 13vh;
-  border: 2px solid black;
+
+  /* align-items: center; */
+  text-align: center;
+  margin: auto;
 }
 /* body {
             background-color: aquamarine;
           } */
-.crd > img {
+.crd > a > img {
   height: 50vh;
   width: 40vh;
+}
+
+a {
+  text-decoration: none;
+  color: blue;
 }

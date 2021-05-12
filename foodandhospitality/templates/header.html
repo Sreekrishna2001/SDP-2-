@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,44 +12,94 @@
       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
+<link rel="stylesheet" href="{% static 'header.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+
+
 
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand col-sm-6" href="">Company Name</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item col-sm-4">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item col-sm-4">
-              <a class="nav-link" href="/aboutus">About Us</a>
-            </li>
-            <li class="nav-item col-sm-4">
-              <a class="nav-link" href="/report">Report</a>
-            </li>
-            <li class="nav-item col-sm-4">
-              <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item col-sm-4">
-              <a class="nav-link" href="/register">Register</a>
-            </li>
-  
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand col-sm-6" href="/"><h4>Zwiggy</h4></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active"  href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'profile' %}">Profile</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item"> 
+            <a class="nav-link active" href="#">Hello,{{user.username}}</a>
+          </li>
+          <li class="nav-item"> 
+            <a class="nav-link active" href="/logout">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item"> 
+            <a class="nav-link active" href="/login">Login</a>
+          </li>
+          <li class="nav-item col-sm-4">
+            <a class="nav-link active" href="/register">Register</a>
+          </li>
+          {% endif %}
       </div>
-    </nav>
+    </div>
+  </nav>
+  <body>
+   
     <div id="content">{% block content %}{% endblock %}</div>
+  
   </body>
+  <div class="footer-clean">
+    <footer>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Food Order & Take Away</a></li>
+                        <li><a href="#">Hotel Booking</a></li>
+                        <li><a href="#">Table Booking</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Company</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Legacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item">
+                    <h3>Careers</h3>
+                    <ul>
+                        <li><a href="#">Job openings</a></li>
+                        <li><a href="#">Employee success</a></li>
+                        <li><a href="#">Benefits</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 item social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-google-plus"></i></a><a href="#"><i class="fa fa-instagram"></i></a>
+                    <p class="copyright">Company Name © 2018</p>
+
+                </div>
+            </div>
+        </div>
+
 </html>

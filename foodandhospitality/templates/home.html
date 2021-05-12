@@ -1,24 +1,20 @@
 {% extends "header.html" %} {% load static %} {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{% static 'home.css' %}" />
-  </head>
-  <body>
-    <div>
-      <div>
+<link
+rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+/>
+<link rel="stylesheet" href="{% static 'home.css' %}" >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'home.css' %}" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<div>
+
+
         <!-- <h2>Carousel Example</h2> -->
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div id="myCarousel" class="carousel slide container" data-ride="carousel">
           <!-- Indicators -->
           <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -69,18 +65,31 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="crd col-sm-3">
+    <h3 style="text-align: center;">Explore your Favorite Restaurants and Hotels 🍕🍕🍕 </h3>
+    <div class=" backgroundimg">
+      <div class="row ">
+        <div class="crd col-sm-3" style="margin:13vh auto; ">
+          
+          <a href="/foodview">
+            <img style="z-index: 1;"
+              src="https://images.unsplash.com/photo-1444201983204-c43cbd584d93?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8aG90ZWx8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+              alt=""
+            >
+            </a>
+        
+            <a style="text-decoration: none;"  href="/foodview"><h2 style="margin-top:-40px;">Restaurants</h2></a>
+        </div>
+        <div class="crd col-sm-3" style="margin:13vh auto; ">
+          <a href="/foodview">
           <img
             src="https://images.unsplash.com/photo-1444201983204-c43cbd584d93?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8aG90ZWx8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             alt=""
-          />
+          >
+          <a style="text-decoration: none;"  href="/foodview"><h2 style="margin-top:-40px;">Hotel</h2></a>
+          </a>
+        </img>
         </div>
-        <div class="crd col-sm-3"></div>
-        <div class="crd col-sm-3"></div>
+  
+
       </div>
-    </div>
-  </body>
-</html>
 {% endblock %}
