@@ -1,0 +1,104 @@
+{% extends 'header.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contact Form</title>
+    <meta
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      name="viewport"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+  </head>
+  <body>
+    <section class="section-100">
+      <div class="container">
+        <h1 class="text-center">Contact Form UI</h1>
+        <br /><br /><br />
+
+        <div class="contact-form">
+          <div class="contact-form__left">
+            <h3 class="m-b-15">Contact Info</h3>
+            <hr />
+            <div>
+              <small class="light-grey"
+                ><i class="fas fa-user m-r-5"></i> Name</small
+              >
+              <p>Kiran Acharya</p>
+            </div>
+            <div>
+              <small class="light-grey"
+                ><i class="fas fa-envelope m-r-5"></i> Email</small
+              >
+              <p>kiranworkspace7@gmail.com</p>
+            </div>
+            <div>
+              <small class="light-grey"
+                ><i class="fas fa-phone m-r-5"></i> Phone</small
+              >
+              <p>+91 9876543215</p>
+            </div>
+            <div>
+              <small class="light-grey"
+                ><i class="fas fa-map-marker m-r-5"></i> Address</small
+              >
+              <p>4286 B Street, Saint Paul, Minnesota MN</p>
+            </div>
+            <div class="contact-form__left_footer">
+              <a href="#!"><i class="fab fa-facebook-f"></i></a>
+              <a href="#!"><i class="fab fa-twitter"></i></a>
+              <a href="#!"><i class="fab fa-instagram"></i></a>
+              <a href="#!"><i class="fab fa-youtube"></i></a>
+              <a href="#!"><i class="fab fa-globe"></i></a>
+              <a href="#!"><i class="fab fa-globe"></i></a>
+            </div>
+          </div>
+          <div class="contact-form__right">
+            <h3 class="m-b-15">Contact Us</h3>
+            <hr />
+            <form>
+              <div class="form-group">
+                <label for="">Name</label>
+                <input type="text" class="form-control form-control-lg" />
+              </div>
+              <div class="form-group">
+                <label for="">Email</label>
+                <input type="text" class="form-control form-control-lg" />
+              </div>
+              <div class="form-group">
+                <label for="">Phone</label>
+                <input type="text" class="form-control form-control-lg" />
+              </div>
+              <div class="form-group">
+                <label for="">Message</label>
+                <textarea
+                  class="form-control form-control-lg"
+                  name=""
+                  id=""
+                  rows="3"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg btn-block">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+{% endblock %}

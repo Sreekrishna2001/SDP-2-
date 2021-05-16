@@ -2,12 +2,17 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 from website.models import uprofileform, uprofile
 
 # import requests
 
 # Create your views here.
+
+
+def em():
+    send_mail('form django after fixing issue', 'mana isp issue ', 'maremandasreekrishna@gmail.com',
+              ['maremandasreekrishna@gmail.com', 'jurendrav@gmail.com'])
 
 
 def home(request):
@@ -72,15 +77,39 @@ def profile(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             form = uprofileform()
-            return render(request, "user_profile.html", {'form': form})
+            # print(request.user.u)
+            try:
+                p = uprofile.objects.get(meta=request.user.id)
+            except:
+                return render(request, "user_profile.html", {'form': form})
+            return render(request, "user_profile.html", {'form': form, 'url': p.profileimg.url})
         return redirect('loginuser')
     else:
         a = request.user
         if a is not None:
             form = uprofileform(request.POST, request.FILES)
+            # pr = uprofile.objects.get(meta=request.user.id)
+            # if pr.profileimg:
+            #     pr.profileimg = form.Meta.model.profileimg
             if form.is_valid():
                 p = form.save(commit=False)
                 p.meta = request.user
                 p.save()
                 return HttpResponse('successfully updated profile')
         return redirect('loginuser')
+
+
+def restsview(request):
+    return render(request, 'displayrest.html')
+
+
+def contactus(request):
+    return render(request, 'contactus.html')
+
+
+def foodcard(request):
+    return render(request, 'foodindex.html', {'d': [1, 2, 3, 4, 5, 6]})
+
+
+def booktable(request):
+    pass

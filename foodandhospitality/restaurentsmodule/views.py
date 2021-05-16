@@ -4,5 +4,6 @@ from .forms import bookingtableform
 
 
 def booktable(request):
+
     form = bookingtableform()
     return render(request, 'bookingform.html', {'form': form})

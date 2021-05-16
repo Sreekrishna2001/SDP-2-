@@ -4,5 +4,6 @@
   {% csrf_token %} {{ form.as_p }}
   <input type="submit" value="submit" />
 </form>
-<img src="{{request.user.uprofile.profileimg.png}}" alt="" />
+<p>/media/{{request.user.uprofile.profileimg}}</p>
+<img src="{{url}}" alt="" />
 {% endblock %}
