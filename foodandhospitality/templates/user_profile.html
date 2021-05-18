@@ -16,6 +16,7 @@
     />
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
 
     <style>
       body {
@@ -174,12 +175,23 @@
   <body>
     <!------ Include the above in your HEAD tag ---------->
     <div
-      style="  width: 100%;
-height: 500px;
-background-image: url('{{url}}');
-background-size: cover;
-border: 1px solid red;"
-    ></div>
+    >
+  <img 
+  src="{{url}}" 
+  alt="" 
+  class="img-rounded"
+  id="profile"
+onclick="openFullscreen();">
+
+<span></span>
+
+
+<p>{{phone }}</p>
+<p>{{address}}</p>
+
+
+
+  </div>
 
     <!-- <h1>This is user Dashboard page</h1>
 <div class="align">
@@ -234,8 +246,23 @@ ji
   </div>
 </div> -->
 <div>
-    <h3>Restaurant Table booking History</h3>
+
+  <script>
+    var elem = document.getElementById("profile");
+    function openFullscreen() {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+      }
+    }
+    </script>
+    <div >
+   
     <div>
+      <h3>Restaurant Table booking History</h3>
       {% for torders in tablebookhistory %}
       <div class="card" style="width: 40rem">
         <div class="card-body">
@@ -245,18 +272,53 @@ ji
           </h6>
           <h6 class="card-subtitle mb-2 text-muted">Date:{{torders.date}}</h6>
           <h6 class="card-subtitle mb-2 text-muted">Time:{{torders.time}}</h6>
-          <a href="orderhistory" class="card-link"
-            ><button class="btn btn-primary">Update Order</button></a
-          >
-          <a href="orderhistory" class="card-link"
-            ><button class="btn btn-danger">Cancel Order</button></a
-          >
+            <form action="/updatebooktable/{{torders.rest_name}}" method="GET">
+              {% csrf_token %}
+              <input type="text" name="rname" value="{{torders.rest_name}}"  hidden>
+              <input type="text" name="rtable" value="{{torders.tableno}}"  hidden>
+              <input type="text" name="rdate" value="{{torders.date}"  hidden>
+              <input type="text" name="rtime" value="{{torders.time}}"  hidden>
+              <input type="text" name="rbname" value="{{torders.name}}"  hidden>
+
+            <button class="btn btn-primary">Update Booking</button>
+          </form>
+          <form action="canceltablebooking" method="POST">
+            {% csrf_token %}
+            <input type="text" name="rname" value="{{torders.rest_name}}"  hidden>
+            <input type="text" name="rtable" value="{{torders.tableno}}"  hidden>
+            <input type="text" name="rdate" value="{{torders.date}"  hidden>
+            <input type="text" name="rtime" value="{{torders.time}}"  hidden>
+            <input type="text" name="rbname" value="{{torders.name}}"  hidden>
+            <button class="btn btn-danger">Cancel Booking</button>
+          </form>
         </div>
       </div>
     </div>
 
       {% endfor %}
+    <div >
 
+      <h3>order food history</h3>
+      {% for o in orderfoodhistory %}
+      <div class="card" style="width: 40rem">
+        <div class="card-body">
+          <h5 class="card-title">Restaurant Name: {{o.rest_name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            Item: {{o.preffood}}
+          </h6>
+          <h6 class="card-subtitle mb-2 text-muted">Quantity: {{o.quantity}}</h6>
+            <form action="orderhistory" method="POST">
+            <button class="btn btn-primary">Update Order</button>
+          </form>
+          <a href="orderhistory" class="card-link"
+            ><button class="btn btn-danger">Cancel Order</button></a
+          >
+        </div>
+      </div>
+        {% endfor %}
+        
+    </div>
+</div>
   </body>
 </html>
 

@@ -56,7 +56,7 @@ def Register(request):
             # email.send()
             send_mail("Confirm Registration in Zwiggy",
                       f'Dear {uname} you are successfully registerd in Zwiggy', 'maremandasreekrishna@gmail.com', [email])
-            return redirect('/')
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'Registration.html', {'errormsg': 'please fill the fields correctly'})
 
@@ -84,27 +84,41 @@ def profile(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             form = uprofileform()
+            tbookdetails = tablebooking.objects.filter(
+                uname=request.user)
+            ordfobject = Orderfood.objects.filter(uname=request.user)
+            # request.session['tblname'] = tbookdetails.rest_name
+            print(ordfobject)
             # print(request.user.u)
             try:
-                p = uprofile.objects.get(meta=request.user.id)
+                p = uprofile.objects.get(meta=request.user)
                 form = uprofileform(instance=p)
-                tbookdetails = tablebooking.objects.filter(
-                    uname=request.user.id)
-                print(tbookdetails)
+
+                # print(request.user)
+                # print(tbookdetails)
             except:
-                return render(request, "user_profile.html", {'form': form})
-            return render(request, "user_profile.html", {'form': form, 'url': p.profileimg.url, 'phone': p.phone_no, 'address': p.address, 'tablebookhistory': tbookdetails})
-        return redirect('loginuser')
+                return render(request, "user_profile.html", {'form': form, 'tablebookhistory': tbookdetails, 'orderfoodhistory': ordfobject})
+            return render(request, "user_profile.html", {'form': form, 'url': p.profileimg.url, 'phone': p.phone_no, 'address': p.address, 'tablebookhistory': tbookdetails, 'orderfoodhistory': ordfobject})
+        return HttpResponseRedirect('login')
     else:
-        a = request.user
-        if a is not None:
-            form = uprofileform(request.POST, request.FILES)
-            if form.is_valid():
-                p = form.save(commit=False)
-                p.meta = request.user
-                p.save()
-                return HttpResponse('successfully updated profile')
-        return redirect('loginuser')
+        rname = request.POST['rname']
+        rtable = request.POST['rtable']
+        rtime = request.POST['rtime']
+        rdate = request.POST['rdate']
+        upbook = tablebooking.objects.get(
+            uname=request.user, rest_name=rname, tableno=rtable)
+        upbookform = tablebookingform(instance=upbook)
+        # a = request.user
+        # if a is not None:
+        #     form = uprofileform(request.POST, request.FILES)
+        #     if form.is_valid():
+        #         p = form.save(commit=False)
+        #         p.meta = request.user
+        #         p.save()
+        #         return HttpResponse('successfully updated profile')
+
+        # return render(request, 'restdetails.html', {'updatetableob': upbookform})
+        redirect(f'restdetails/<{rname}>')
 
 
 @ login_required(login_url='/login')
@@ -123,23 +137,27 @@ def contactus(request):
     return render(request, 'contactus.html')
 
 
+def aboutus(request):
+    return render(request, 'aboutus.html')
+
+
 def foodcard(request):
     return render(request, 'foodindex.html', {'d': [1, 2, 3, 4, 5, 6]})
 
 
 @ login_required(login_url='/login')
-def booktable(request):
-    res_name = request.session['rest_name']
-    tdook = tablebookingform(request.POST)
-    tbform = tablebooking(uname=request.user, rest_name=res_name,
-                          name=tdook.data['name'], tableno=tdook.data['tableno'], date=tdook.data['date'], time=tdook.data['time'])
-    tbform.save()
+def updatebooktable(request):
 
-    return render(request, 'newregistraion.html', {'tbform': tbform})
+    uptbl = tablebooking.objects.get(uname=request.user, rest_name=request.session['tbldata'].rest_name,
+                                     name=request.session['tbldata'].name, tableno=request.session['tbldata'].tableno)
+    tbform = tablebookingform(instance=uptbl)
+    print(uptbl)
+    return render(request, 'restdetails.html', {'tbform': tbform})
 
 
-def getuserfoodhistory(request):
+def updatefoodorder(request):
     # uorders = orderfood.objects.all()
+
     return HttpResponse('order history for food')
 
 
@@ -147,7 +165,7 @@ def orderfood(request):
     res_name = request.session['rest_name']
     forderf = Orderfoodform(request.POST)
     forder = Orderfood(uname=request.user.id, rest_name=res_name, preffood=forderf.data['preffood'], quantity=forderf.data[
-                       'quantity'], pincode=forderf.data['pincode'], city=forderf.data['city'], address=forderf.data['address'])
+        'quantity'], pincode=forderf.data['pincode'], city=forderf.data['city'], address=forderf.data['address'])
     forder.save()
     return HttpResponse("oreder food success")
 
@@ -178,17 +196,12 @@ def foodrecommendations(request):
 
 def restaurant_details(request, restid):
     if request.method == 'GET':
-        imgs = [
-            'https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/nlqtdgbpqmgy16ygbs40',
-            'https://images2.minutemediacdn.com/image/upload/c_crop,h_2172,w_3864,x_0,y_202/f_auto,q_auto,w_1100/v1558021472/shape/mentalfloss/80312-istock-957009874.jpg',
-            'https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/jugcspco53mumqfzrdmm',
-            'https://www.qsrmagazine.com/sites/default/files/styles/story_page/public/2020-09/KFC%20X%20DoorDash%20PR%20Image%202.png?itok=lYdjw8El'
-        ]
         details = ds.get_restaurant_details(restid)
         tbook = tablebookingform()
         foorder = Orderfoodform()
         request.session['rest_name'] = details[3]
-        return render(request, 'restdetails.html', {'data': details, 'tbook': tbook, 'foorder': foorder, 'imgs': imgs})
+
+        return render(request, 'restdetails.html', {'data': details, 'tbook': tbook, 'foorder': foorder})
     else:
         print("Book" in request.POST)
         try:
@@ -198,9 +211,9 @@ def restaurant_details(request, restid):
                 tbform = tablebooking(uname=request.user, rest_name=res_name,
                                       name=tdook.data['name'], tableno=tdook.data['tableno'], date=tdook.data['date'], time=tdook.data['time'])
                 tbform.save()
-                send_mail('Table booking confirmation from zwiggt',
-                          f' \nDear {request.user.username} you table booking in {res_name} with table no:{request.POST["tableno"]} on {request.POST["date"]} at {request.POST["time"] } has been confirmed', 'maremandasreekrishna@gmail.com', [request.user.email, ])
-                return HttpResponse('success booking table')
+                # send_mail('Table booking confirmation from zwiggt',
+                #           f' \nDear {request.user.username} you table booking in {res_name} with table no:{request.POST["tableno"]} on {request.POST["date"]} at {request.POST["time"] } has been confirmed', 'maremandasreekrishna@gmail.com', [request.user.email, ])
+                return HttpResponse('<h1 style = "text-align:center;">success booking table</h1>')
             # else:
             #     res_name = request.session['rest_name']
             #     forderf = Orderfoodform(request.POST)
@@ -209,7 +222,7 @@ def restaurant_details(request, restid):
             #     forder.save()
             #     return HttpResponse('success ordering food')
         except:
-            HttpResponse('exception in booking table')
+            return HttpResponseRedirect('/login')
         try:
             print("orderfood" in request.POST)
             res_name = request.session['rest_name']
@@ -223,7 +236,7 @@ def restaurant_details(request, restid):
                       f'Dear {request.user.username} your order has been confirmed\n Here are details from {res_name} restaurant {request.POST["preffood"]},{request.POST["address"]}', 'maremandasreekrishna@gmail.com', [request.user.email])
             return HttpResponse('success ordering food')
         except:
-            return HttpResponse('exception in ordering food ')
+            return HttpResponseRedirect('/login')
 
 
 def findrestaurant(request):
@@ -244,5 +257,47 @@ def findrestaurant(request):
 #     print(request)
 
 
-def reccrousel(request):
-    return render(request, 'Recommendedcrousel.html')
+def tableupdatehandler(request, restid):
+    if request.method == 'GET':
+        details = ds.get_restaurant_details(restid)
+        uptbl = tablebooking.objects.get(uname=request.user, rest_name=request.GET['rname'],
+                                         name=request.GET['rbname'], tableno=request.GET['rtable'])
+        request.session['rname'] = request.GET['rname']
+        request.session['name'] = request.GET['rbname']
+        request.session['tableno'] = request.GET['rtable']
+        tbook = tablebookingform(instance=uptbl)
+
+        # print(tbook.rest_name)
+        foorder = Orderfoodform()
+        request.session['rest_name'] = details[3]
+        return render(request, 'restdetails.html', {'data': details, 'tbook': tbook, 'foorder': foorder, 'rest_name': restid})
+    else:
+        uptb = tablebookingform(request.POST)
+        uptbob = tablebooking.objects.get(uname=request.user, rest_name=request.session['rname'],
+                                          name=request.session['name'], tableno=request.session['tableno'])
+        # uptbob.update(name=uptb.data['name'], tableno=uptb.data['tableno'],
+        #               date=uptb.data['date'], time=uptb.data['time'])
+        uptbob.name = request.POST['name']
+        uptbob.tableno = request.POST['tableno']
+        uptbob.date = request.POST['date']
+        uptbob.time = request.POST['time']
+        uptbob.save()
+        return HttpResponse("successfully updated")
+
+
+# def savetableupdatehandle(request):
+#     uptb = tablebookingform(request.POST)
+#     uptbob = tablebooking.objects.get(uname=request.user, rest_name=request.session['rname'],
+#                                       name=request.session['name'], tableno=request.session['tableno'])
+#     uptbob.update(name=uptb.data['name'], tableno=uptb.data['tableno'],
+#                   date=uptb.data['date'], time=uptb.data['time'])
+#     return HttpResponse("successfully updated")
+
+
+def canceltablebooking(request):
+    tablebooking.objects.filter(name=request.POST['rbname'],
+
+                                uname=request.user,
+
+                                ).delete()
+    return HttpResponse('Booking deleted')

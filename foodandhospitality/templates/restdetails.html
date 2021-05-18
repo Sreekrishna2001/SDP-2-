@@ -44,12 +44,29 @@
       <div class="alignimganddetails">
         <div>
           <h3>Book Your Table</h3>
+          {% if rest_name %}
+          <form action="/updatebooktable/{{rest_name}}" method="POST">
+            {% csrf_token %}
+            <table>
+              {{tbook.as_table}}
+            </table>
+            <!-- <input type="text" value="{{data.}}"  hidd/> -->
+
+            <input
+              type="submit"
+              value="Update"
+              name="booktable"
+              class="btn btn-dark"
+            />
+          </form>
+          {% else %}
           <form action="{% url 'booktable' %}" method="POST">
             {% csrf_token %}
             <table>
               {{tbook.as_table}}
             </table>
             <!-- <input type="text" value="{{data.}}"  hidd/> -->
+
             <input
               type="submit"
               value="Book"
@@ -57,6 +74,7 @@
               class="btn btn-dark"
             />
           </form>
+          {% endif %}
         </div>
         <div>
           <h3>Order Your Food</h3>

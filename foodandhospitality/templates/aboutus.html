@@ -1,59 +1,81 @@
-{% extends 'header.html' %} {% block content %}
-<main role="main">
-  <section class="jumbotron text-center">
-    <div class="container">
-      <h1 class="jumbotron-heading">About Us</h1>
-      <p class="lead text-muted">
-        Something short and leading about the collection below—its contents, the
-        creator, etc. Make it short and sweet, but not too short so folks don't
-        simply skip over it entirely.
-      </p>
-      <p>
-        <a href="#" class="btn btn-primary my-2">Main call to action</a>
-        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-      </p>
-    </div>
-  </section>
+{% extends 'header.html' %} {% load static %} {% block content %}
+<style>
+  .social-link {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    border-radius: 50%;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
 
-  <div class="album py-5 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card mb-4 box-shadow">
-            <img
-              class="card-img-top"
-              data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail"
-              alt="Card image cap"
-            />
-            <div class="card-body">
-              <p class="card-text">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                  >
-                    View
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                  >
-                    Edit
-                  </button>
-                </div>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
+  .social-link:hover,
+  .social-link:focus {
+    background: #ddd;
+    text-decoration: none;
+    color: #555;
+  }
+</style>
+
+<header class="text-center py-5 mb-4">
+  <div class="container">
+    <h1 class="font-weight-light text-white">Meet the Team</h1>
+  </div>
+</header>
+
+<!-- Page Content -->
+<div class="container" style="margin-left: 30vh">
+  <div class="row">
+    <!-- Team Member 1 -->
+
+    <!-- Team Member 2 -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-0 shadow">
+        <img
+          src="{% static 'images\photo_2021-02-18_08-23-09.jpg' %}"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body text-center">
+          <h5 class="card-title mb-0">V.Jurendra</h5>
+          <div class="card-text text-black-50">Web Developer</div>
+        </div>
+      </div>
+    </div>
+    <!-- Team Member 3 -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-0 shadow">
+        <img
+          src="{% static 'images\photo_2021-02-18_08-23-09.jpg' %}"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body text-center">
+          <h5 class="card-title mb-0">A.Sai Sohith</h5>
+          <div class="card-text text-black-50">Web Developer</div>
+        </div>
+      </div>
+    </div>
+    <!-- Team Member 4 -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-0 shadow">
+        <img
+          src="{% static 'images\photo_2021-02-18_08-23-09.jpg' %}"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body text-center">
+          <h5 class="card-title mb-0">M.Sree Krishna</h5>
+          <div class="card-text text-black-50">Web Developer</div>
         </div>
       </div>
     </div>
   </div>
-</main>
-
+  <!-- /.row -->
+</div>
+<!-- /.container -->
 {% endblock %}

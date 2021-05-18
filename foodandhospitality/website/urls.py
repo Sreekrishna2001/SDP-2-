@@ -6,10 +6,10 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('login', views.loginuser, name='loginuser'),
     path('profile', views.profile, name="profile"),
-    path('updateprofile', views.updateprofiledetails, name="updateprofile"),
 
+    path('updateprofile', views.updateprofiledetails, name="updateprofile"),
     path('register', views.Register, name="Register"),
-    # path('aboutus',views.aboutus),
+    path('aboutus', views.aboutus),
     path('foodview', views.foodrecommendations),
     # path('aboutus', views.aboutus),
     path('logout', views.logoutuser),
@@ -21,8 +21,12 @@ urlpatterns = [
     path('searchrestaurant', views.findrestaurant),
     path('restdetails/booktable', views.restaurant_details, name="booktable"),
     path('restdetails/orderfood', views.restaurant_details, name="orderfood"),
-    path('orderhistory', views.getuserfoodhistory, name='orderhistory'),
-    path('reccrousel', views.reccrousel),
+    path('orderhistory', views.updatefoodorder, name='orderhistory'),
+
+    path('updatebooktable/<restid>',
+         views.tableupdatehandler, name="updatebooktable"),
+    path('canceltablebooking', views.canceltablebooking, name='canceltablebooking'),
+
 
 
 
