@@ -6,14 +6,27 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('login', views.loginuser, name='loginuser'),
     path('profile', views.profile, name="profile"),
+    path('updateprofile', views.updateprofiledetails, name="updateprofile"),
+
     path('register', views.Register, name="Register"),
     # path('aboutus',views.aboutus),
-    path('foodview', views.restsview),
+    path('foodview', views.foodrecommendations),
     # path('aboutus', views.aboutus),
     path('logout', views.logoutuser),
     path('upload', views.upload),
     path('contactus', views.contactus),
     path('foodcard', views.foodcard),
+    path('samplechart', views.sample_charts),
+    path('restdetails/<restid>', views.restaurant_details),
+    path('searchrestaurant', views.findrestaurant),
+    path('restdetails/booktable', views.restaurant_details, name="booktable"),
+    path('restdetails/orderfood', views.restaurant_details, name="orderfood"),
+    path('orderhistory', views.getuserfoodhistory, name='orderhistory'),
+    path('reccrousel', views.reccrousel),
+
+
+
+
 
 
 ]

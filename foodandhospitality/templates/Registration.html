@@ -18,6 +18,15 @@
   </head>
 
   <body>
+    <!-- <script>
+      function checkpass() {
+        pass = document.getElementById("inputPassword").value;
+        cpass = document.getElementById("inputConfirmPassword").value;
+        if (pass != cpass) {
+          document.getElementById("passw").innerText("password mismatch");
+        }
+      }
+    </script> -->
     <div class="container">
       <div class="row">
         <div class="col-lg-10 col-xl-9 mx-auto">
@@ -62,6 +71,8 @@
                     class="form-control"
                     placeholder="Password"
                     name="pass"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                     required
                   />
                   <label for="inputPassword">Password</label>
@@ -87,18 +98,6 @@
                 </button>
                 <a class="d-block text-center mt-2 small" href="#">Sign In</a>
                 <hr class="my-4" />
-                <button
-                  class="btn btn-lg btn-google btn-block text-uppercase"
-                  type="submit"
-                >
-                  <i class="fab fa-google mr-2"></i> Sign up with Google
-                </button>
-                <button
-                  class="btn btn-lg btn-facebook btn-block text-uppercase"
-                  type="submit"
-                >
-                  <i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook
-                </button>
               </form>
             </div>
           </div>

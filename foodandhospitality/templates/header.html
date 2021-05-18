@@ -17,13 +17,58 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<style>
+.dropbtn {
+  /* background-color: #04AA6D; */
+  /* color: white; */
+  padding: 10px;
+  /* font-size: 16px; */
+  border: none;
+}
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {}
+.avatar {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.back {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  }
+</style>
 
   </head>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand col-sm-6" href="/"><h4>Zwiggy</h4></a>
+      <a class="navbar-brand col-sm-8" href="/">Zwiggy</a></h3>
       <button
         class="navbar-toggler"
         type="button"
@@ -41,15 +86,31 @@
             <a class="nav-link active"  href="/">Home</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link active"  href="contactus">Contactus</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active"  href="/">Aboutus</a>
+          </li>
+          <!-- <li class="nav-item">
             <a class="nav-link active" href="{% url 'profile' %}">Profile</a>
-          </li>
+          </li> -->
           {% if user.is_authenticated %}
-          <li class="nav-item"> 
-            <a class="nav-link active" href="#">Hello,{{user.username}}</a>
+      
+          <li>
+            <div class="dropdown">
+              
+              <button class="dropbtn">
+                <i class="fas fa-user-circle"></i>
+                Hello,{{user.username}}</button>
+              <div class="dropdown-content">
+                <a href="{% url 'profile' %}">DashBoard</a>
+                <a href="logout">Logout</a>
+                
+              </div>
+            </div>
+
           </li>
-          <li class="nav-item"> 
-            <a class="nav-link active" href="/logout">Logout</a>
-          </li>
+
           {% else %}
           <li class="nav-item"> 
             <a class="nav-link active" href="/login">Login</a>
@@ -62,9 +123,7 @@
     </div>
   </nav>
   <body>
-   
-    <div id="content">{% block content %}{% endblock %}</div>
-  
+    <div class="back" >{% block content %}{% endblock %}</div>
   </body>
   <div class="footer-clean">
     <footer>
