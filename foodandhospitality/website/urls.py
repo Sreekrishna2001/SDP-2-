@@ -26,9 +26,9 @@ urlpatterns = [
     path('updatebooktable/<restid>',
          views.tableupdatehandler, name="updatebooktable"),
     path('canceltablebooking', views.canceltablebooking, name='canceltablebooking'),
-
-
-
+    path('cancelorderfood', views.cancelorderfood, name='cancelorderfood'),
+    path('hotelview', views.gethotels, name='gethotels'),
+    path('roombook', views.roombook, name='roombook'),
 
 
 

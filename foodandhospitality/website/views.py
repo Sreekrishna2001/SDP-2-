@@ -1,3 +1,4 @@
+from website.models import hotelbookingform
 from . import sampleds as ds
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -26,9 +27,14 @@ def loginuser(request):
     if request.method == 'POST':
         uname = request.POST['uname']
         passw = request.POST['pass']
-        user = auth.authenticate(request, username=uname, password=passw)
-        # print(user)
         msg = "invalid credentials"
+        try:
+
+            user = auth.authenticate(request, username=uname, password=passw)
+        except:
+            return render(request, 'login.html', {'msg': msg})
+        # print(user)
+
         if user is not None:
             print('authenticated')
             auth.login(request, user)
@@ -211,18 +217,18 @@ def restaurant_details(request, restid):
                 tbform = tablebooking(uname=request.user, rest_name=res_name,
                                       name=tdook.data['name'], tableno=tdook.data['tableno'], date=tdook.data['date'], time=tdook.data['time'])
                 tbform.save()
-                # send_mail('Table booking confirmation from zwiggt',
-                #           f' \nDear {request.user.username} you table booking in {res_name} with table no:{request.POST["tableno"]} on {request.POST["date"]} at {request.POST["time"] } has been confirmed', 'maremandasreekrishna@gmail.com', [request.user.email, ])
-                return HttpResponse('<h1 style = "text-align:center;">success booking table</h1>')
-            # else:
-            #     res_name = request.session['rest_name']
-            #     forderf = Orderfoodform(request.POST)
-            #     forder = Orderfood(uname=request.user.id, rest_name=res_name, preffood=forderf.data['preffood'], quantity=forderf.data[
-            #         'quantity'], pincode=forderf.data['pincode'], city=forderf.data['city'], address=forderf.data['address'])
-            #     forder.save()
-            #     return HttpResponse('success ordering food')
+                send_mail('Table booking confirmation from zwiggt',
+                          f' \nDear {request.user.username} you table booking in {res_name} with table no:{request.POST["tableno"]} on {request.POST["date"]} at {request.POST["time"] } has been confirmed', 'maremandasreekrishna@gmail.com', [request.user.email, ])
+                return render(request, 'messpage.html', {'msgdata': "your table is successfully booked"})
+            else:
+                res_name = request.session['rest_name']
+                forderf = Orderfoodform(request.POST)
+                forder = Orderfood(uname=request.user.id, rest_name=res_name, preffood=forderf.data['preffood'], quantity=forderf.data[
+                    'quantity'], pincode=forderf.data['pincode'], city=forderf.data['city'], address=forderf.data['address'])
+                forder.save()
+                return HttpResponse('success ordering food')
         except:
-            return HttpResponseRedirect('/login')
+            pass
         try:
             print("orderfood" in request.POST)
             res_name = request.session['rest_name']
@@ -282,7 +288,9 @@ def tableupdatehandler(request, restid):
         uptbob.date = request.POST['date']
         uptbob.time = request.POST['time']
         uptbob.save()
-        return HttpResponse("successfully updated")
+        send_mail('table booking updation confirmation',
+                  f'updated details are : \n{request.POST["name"]} {request.POST["date"]} {request.POST["time"]}', 'maremandasreekrishna@gmail.com', [request.user.email])
+        return render(request, 'messpage.html', {'msgdata': "Your table booking updated successfully "})
 
 
 # def savetableupdatehandle(request):
@@ -300,4 +308,66 @@ def canceltablebooking(request):
                                 uname=request.user,
 
                                 ).delete()
-    return HttpResponse('Booking deleted')
+    send_mail('Regarding table booking cancellation',
+              f'your  booking with details : {request.POST["rdate"]}\n{request.POST["rtime"]}\n{request.POST["rname"]} is cacelled', 'maremandasreekrishna@gmail.com', [request.user.email])
+    return render(request, 'messpage.html', {'msgdata': "your table booking cancelled successfully"})
+
+
+def cancelorderfood(request):
+    Orderfood.objects.filter(
+        uname=request.user,
+
+        preffood=request.POST['preffood']
+    ).delete()
+    return render(request, 'messpage.html', {'msgdata': "you food order cancelled"})
+
+
+def gethotels(request):
+    nameofhotel = [
+        'TAJ LAKE PALACE',
+        'THE OBEROI UDAIVILAS',
+        'THE LEELA PALACE UDAIPUR',
+        'TAJ ARAVALI RESORT & SPA',
+        'RAMBAGH PALACE',
+        'OBEROI RAJVILAS',
+        'JW MARRIOTT JAIPUR RESORT & SPA',
+        'THE ST. REGIS MUMBAI'
+    ]
+
+    ratingofhotel = [
+        '4.9',
+        '4.6',
+        '4.7',
+        '4.5',
+        '4.6',
+        '4.2',
+        '4.8',
+        '4.6'
+    ]
+    imgs = [
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/Best-Hotels-India.jpg',
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/Taj-Lake-Palace-1.jpg',
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/The-Oberoi-Udaivilas-1.jpg',
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/The-Leela-Palace-1.jpg',
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/Taj-Aravali-Resort-Spa.jpg',
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/Rambagh-Palace-1.jpg',
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/The-Oberoi-Rajvilas-Jaipur-1.jpg',
+        'https://www.theasiacollective.com/wp-content/uploads/2020/03/The-Taj-Mahal-Palace-1.jpg'
+
+    ]
+    if request.method == 'GET':
+        content = zip(nameofhotel, ratingofhotel, imgs)
+
+        return render(request, 'displayhotel.html', {'d': content})
+    else:
+        if request.POST['search'] in nameofhotel:
+            ind = nameofhotel.index(request.POST['search'])
+            print(ind)
+            content = zip(nameofhotel[1], ratingofhotel[1], imgs[1])
+            return render(request, 'displayhotel.html', {'d': content})
+        pass
+
+
+def roombook(request):
+    rform = hotelbookingform()
+    return render(request, 'roombook.html', {'rform': rform})
